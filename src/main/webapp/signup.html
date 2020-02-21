@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/signin.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+    <script src="js/jquery.cookie.js"></script>
+    <title>EAlbum</title>
+</head>
+<body>
+    <div class="container text-center">
+        <form class="form-signin" id="form" style="max-width:350px;">
+            <h1 class="h2 mb-3 font-weight-normal">Sign Up</h1>
+            
+            <div class="input-group mb-3">
+                <div class="input-group-prepend"  >
+                  <span class="input-group-text" id="basic-addon1">Email</span>
+                </div>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon2">Username</span>
+                </div>
+                <input type="text" id="inputUsername" class="form-control" placeholder="Username" required="" >
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend" style="height: auto;">
+                  <span class="input-group-text"  id="basic-addon3">Password</span>
+                </div>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend" >
+                  <span class="input-group-text"  id="basic-addon5">Verify Code</span>
+                </div>
+                <input type="text" id="inputVerifyCode" class="form-control" placeholder="VerifyCode" required="">
+                <div class="input-group-append">
+                  <img style="height:46px;width: 100px;" src="/user/verifycode" onclick="this.src='/user/verifycode?'+Math.random()" alt="Verify Code">
+                </div>
+              </div>
+            <button class="btn btn-lg btn-primary btn-block" id="submit"  type="submit">Sign Up</button>
+          </form>
+    </div>
+    <script>
+        $("#form").on("submit",function(e){
+          e.preventDefault();
+          var email = $("#inputEmail").val();
+          var username = $("#inputUsername").val();
+          var password = $("#inputPassword").val();
+          var verifycode = $("#inputVerifyCode").val();
+
+          $.ajax({
+            url:"user/signup",
+            type:'POST',
+            dataType:"text",
+            data:{
+              email:email,
+              username : username,
+              password:password,
+              verifycode:verifycode
+            },
+            success:function(data){
+         
+              switch(Number(data)){
+                case -1:alert("验证码错误！");break;
+                case -2:alert("邮箱已被注册！");break;
+                case -3:alert("无法向您的邮箱发送激活码，请重新尝试或换个邮箱。");break;
+                case 1 :alert("注册成功，但需要激活");$(window).attr('location','activate.html');break;
+                default:alert("未知错误！");break;
+              }
+            }
+            
+          })
+        })
+    </script>
+
+
+</body>
+</html>

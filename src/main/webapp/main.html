@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+ 
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark shadow-sm" style="width:100vw;position: fixed; top: 0; z-index: 100;">
+        <div class="container-fluid d-flex justify-content-between" style="flex-direction: row!important;">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2"
+                    viewBox="0 0 24 24" focusable="false">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <strong>EAlbum</strong>
+            </a>
+            
+            <div style="display: inline-block;display: flex;">
+                <div class="input-group" style="margin-right: 20px;" >
+                    <div class="custom-file">
+                      <input type="file" name="upload" id="inputGroupFile" style="display: none;"  multiple >
+                      <input type="file" class="custom-file-input" id="fakeInputGroupFile"  aria-describedby="inputGroupFileAddon">
+                      <label class="custom-file-label" id="inputFileLabel" for="fakeInputGroupFile">Choose file</label>
+                    </div>
+                  </div>
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        NULL
+                    </a>
+    
+                    <div class="dropdown-menu" style="min-width: 7em!important;" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#" onclick="logOut()" >Log out</a>
+    
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </nav>
+<div class="container-fluid" >
+    <div class="row">
+        <nav class="sidebar"  >
+        <div class="sidebar-icon" >
+            <a href="#photosGroup"  >
+            <svg t="1581776751896" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3295" width="30" height="35"><path d="M784 112H240C152 112 80 184 80 272v480c0 88 72 160 160 160h544c88 0 160-72 160-160V272c0-88-72-160-160-160z m96 640c0 52.8-43.2 96-96 96H240c-52.8 0-96-43.2-96-96V272c0-52.8 43.2-96 96-96h544c52.8 0 96 43.2 96 96v480z" fill="#4A576A" p-id="3296"></path><path d="M352 480c52.8 0 96-43.2 96-96s-43.2-96-96-96-96 43.2-96 96 43.2 96 96 96z m0-128c17.6 0 32 14.4 32 32s-14.4 32-32 32-32-14.4-32-32 14.4-32 32-32zM814.4 731.2l-3.2-3.2-177.6-177.6c-25.6-25.6-65.6-25.6-91.2 0l-80 80-36.8-36.8c-25.6-25.6-65.6-25.6-91.2 0l-134.4 134.4c-4.8 6.4-8 14.4-8 24 0 17.6 14.4 32 32 32 9.6 0 16-3.2 22.4-9.6l134.4-134.4 134.4 134.4c6.4 6.4 14.4 9.6 24 9.6 17.6 0 32-14.4 32-32 0-9.6-4.8-17.6-9.6-24l-52.8-52.8 80-80 180.8 180.8c6.4 4.8 12.8 8 20.8 8 17.6 0 32-14.4 32-32 0-8-3.2-16-8-20.8z" fill="#4A576A" p-id="3297"></path></svg>
+            <div style="font-size: 14px;">照片</div>
+            </a>
+        </div>  
+        <div class="sidebar-icon" >
+            <a href="#albumsGroup"  >
+            <svg t="1581776502182" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1661" width="30" height="35"><path d="M276 981.333333H181.333333a53.393333 53.393333 0 0 1-53.333333-53.333333V181.333333a53.393333 53.393333 0 0 1 53.333333-53.333333h746.666667a53.393333 53.393333 0 0 1 53.333333 53.333333v746.666667a53.393333 53.393333 0 0 1-53.333333 53.333333H276z m51.5-42.666666H928a10.666667 10.666667 0 0 0 10.666667-10.666667v-215.166667l-185.126667-185.12a10.666667 10.666667 0 0 0-15.08 0zM170.666667 840.833333V928a10.666667 10.666667 0 0 0 10.666666 10.666667h85.833334l192.666666-192.666667-89.626666-89.62a10.666667 10.666667 0 0 0-15.08 0zM181.333333 170.666667a10.666667 10.666667 0 0 0-10.666666 10.666666v599.166667l154.286666-154.293333a53.333333 53.333333 0 0 1 75.426667 0L490 715.833333l218.286667-218.293333a53.333333 53.333333 0 0 1 75.426666 0L938.666667 652.5V181.333333a10.666667 10.666667 0 0 0-10.666667-10.666666zM64 682.666667a21.333333 21.333333 0 0 1-21.333333-21.333334V96a53.393333 53.393333 0 0 1 53.333333-53.333333h565.333333a21.333333 21.333333 0 0 1 0 42.666666H96a10.666667 10.666667 0 0 0-10.666667 10.666667v565.333333a21.333333 21.333333 0 0 1-21.333333 21.333334z m298.666667-213.333334c-58.813333 0-106.666667-47.853333-106.666667-106.666666s47.853333-106.666667 106.666667-106.666667 106.666667 47.853333 106.666666 106.666667-47.853333 106.666667-106.666666 106.666666z m0-170.666666a64 64 0 1 0 64 64 64.073333 64.073333 0 0 0-64-64z" fill="#5C5C66" p-id="1662"></path></svg>
+            <div style="font-size: 14px;">相册</div>
+            </a>
+        </div>
+        </nav>
+        <div class="main" id="main" >
+            <div class="content"  id="photosGroup" >
+            <div class="photosGroup"  v-for="(pGroup, pgindex) in photosData" data-day="">
+                <div class="title">
+                    <div class="day" style="margin-left:10px;">{{pGroup.day}}</div>
+                </div>
+                <div class="photos" >
+                    <div class="img"  v-for="(photo,imgindex) in pGroup.photos" v-bind:id="photo.id" v-bind:data-id="photo.id"  >
+                        <div class="delete" v-bind:data-id="photo.id"  v-bind:data-imgindex="imgindex" v-bind:data-pgindex="pgindex" onclick="deletePhoto(this)" >
+                            <svg t="1581844816312" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="23515" width="35" height="35"><path d="M221.467345 252.510275h581.273652v581.273652c0 34.168057-27.917803 62.294201-62.294201 62.294201H283.761546c-34.168057 0-62.294201-27.917803-62.294201-62.294201v-581.273652z" fill="#FFB74D" p-id="23516"></path><path d="M449.809969 356.264496c0-11.4588-9.375381-20.834181-20.834181-20.834181s-20.834181 9.375381-20.834181 20.834181v435.851069c0 11.4588 9.375381 20.834181 20.834181 20.834181s20.834181-9.375381 20.834181-20.834181V356.264496zM615.858393 356.264496c0-11.4588-9.375381-20.834181-20.834181-20.834181s-20.834181 9.375381-20.834181 20.834181v435.851069c0 11.4588 9.375381 20.834181 20.834181 20.834181s20.834181-9.375381 20.834181-20.834181V356.264496z" fill="#FB8C00" p-id="23517"></path><path d="M194.591251 211.258596c-10.208749 0-18.750763 9.375381-18.750763 20.834181s8.333672 20.834181 18.750763 20.834181H829.200407c10.208749 0 18.750763-9.375381 18.750763-20.834181s-8.333672-20.834181-18.750763-20.834181H194.591251z" fill="#FB8C00" p-id="23518"></path><path d="M449.809969 176.04883c-11.4588 0-20.834181 9.375381-20.834181 20.834181s9.375381 20.834181 20.834181 20.834181h124.588403c11.4588 0 20.834181-9.375381 20.834181-20.834181s-9.375381-20.834181-20.834181-20.834181h-124.588403z" fill="#EF6C00" p-id="23519"></path></svg>
+                         </div>
+                         <div class="download">
+                             <a v-bind:href="photo.path" download="">
+                                <svg t="1582284893379" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3568" width="35" height="35"><path d="M598.293333 746.005333l-60.714666 49.301334V516.266667a25.6 25.6 0 0 0-51.157334 0v279.04l-60.714666-49.301334a25.6 25.6 0 1 0-32.256 39.744l102.421333 83.2a25.621333 25.621333 0 0 0 32.256 0l102.4-83.2a25.6 25.6 0 1 0-32.234667-39.744z" fill="#1bd1f4" p-id="3569" data-spm-anchor-id="a313x.7781069.0.i4" class=""></path><path d="M810.666667 405.333333c-1.130667 0-2.24 0-3.328 0.042667a298.496 298.496 0 0 0-565.418667-84.906667A213.333333 213.333333 0 0 0 256 746.666667h88.064a68.416 68.416 0 0 1 65.514667-49.045334 68.48 68.48 0 0 1 34.176 9.173334V516.266667a68.266667 68.266667 0 0 1 136.490666 0v190.549333a68.266667 68.266667 0 0 1 87.168 16.085333A67.541333 67.541333 0 0 1 679.957333 746.666667H810.666667a170.666667 170.666667 0 0 0 0-341.333334z" fill="#1bd1f4" p-id="3570" data-spm-anchor-id="a313x.7781069.0.i3" class=""></path></svg>
+                            </a> 
+                        </div>
+                        <img v-bind:src="photo.prepath" v-bind:layer-src="photo.path" v-bind:alt="photo.date" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="albumsGroup" >
+            <div class="albums"  >
+                <div class="album" id="addAlbum" onclick="showAddAlbumModel()" >
+                    <div class="image"  >
+                       <div class="album-preview" style="padding: 55px ;" >
+                        <svg  t="1582113054351" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1916" width="40" height="40"><path d="M474 152m8 0l60 0q8 0 8 8l0 704q0 8-8 8l-60 0q-8 0-8-8l0-704q0-8 8-8Z" p-id="1917" fill="#1bd1f4"></path><path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z" p-id="1918" fill="#1bd1f4"></path></svg>
+                       </div>
+                        <div class="album-size"></div>
+                    </div>
+                    <div class="album-name">新建相册</div>
+                </div>
+                <div class="album" v-for="(album,albumindex) in albums" >
+                    <div class="image">
+                        <div class="delete" v-bind:data-id="album.id" v-bind:data-albumindex="albumindex"  onclick="deleteAlbum(this)" >
+                            <svg t="1581844816312" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="23515" width="35" height="35"><path d="M221.467345 252.510275h581.273652v581.273652c0 34.168057-27.917803 62.294201-62.294201 62.294201H283.761546c-34.168057 0-62.294201-27.917803-62.294201-62.294201v-581.273652z" fill="#FFB74D" p-id="23516"></path><path d="M449.809969 356.264496c0-11.4588-9.375381-20.834181-20.834181-20.834181s-20.834181 9.375381-20.834181 20.834181v435.851069c0 11.4588 9.375381 20.834181 20.834181 20.834181s20.834181-9.375381 20.834181-20.834181V356.264496zM615.858393 356.264496c0-11.4588-9.375381-20.834181-20.834181-20.834181s-20.834181 9.375381-20.834181 20.834181v435.851069c0 11.4588 9.375381 20.834181 20.834181 20.834181s20.834181-9.375381 20.834181-20.834181V356.264496z" fill="#FB8C00" p-id="23517"></path><path d="M194.591251 211.258596c-10.208749 0-18.750763 9.375381-18.750763 20.834181s8.333672 20.834181 18.750763 20.834181H829.200407c10.208749 0 18.750763-9.375381 18.750763-20.834181s-8.333672-20.834181-18.750763-20.834181H194.591251z" fill="#FB8C00" p-id="23518"></path><path d="M449.809969 176.04883c-11.4588 0-20.834181 9.375381-20.834181 20.834181s9.375381 20.834181 20.834181 20.834181h124.588403c11.4588 0 20.834181-9.375381 20.834181-20.834181s-9.375381-20.834181-20.834181-20.834181h-124.588403z" fill="#EF6C00" p-id="23519"></path></svg>
+                        </div>
+                       <div class="album-preview" :style="{'backgroundImage': 'url(' + album.previewPhotoPath + ')'}" ></div>
+                        <div class="album-size">{{album.size}}</div>
+                    </div>
+                    <div class="album-name">{{album.name}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- 原图显示 -->
+
+        <!-- 两个提示框 -->
+        <!-- 上传图片到相册 -->
+        <input type="text" id="selected" style="display: none;">
+        <div class="card text-white  mb-3 model" id="selectModel" style="position: fixed; top:66px;left:0;right:0;margin:auto; max-height: 500px;max-width: 400px;
+         ">
+            <div class="card-header" style="display: flex; flex-direction:row; justify-content: space-between; background-color: #fff!important;">
+                    <div class="text-dark" >上传到相册</div>
+                    <div  style="width:25px;height:25px;cursor: pointer;" onclick="hideSelect()"  >
+                        <svg t="1582029665381" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2182" width="25" height="25"><path d="M560 512l259.2-259.2c12.8-12.8 12.8-35.2 0-48s-35.2-12.8-48 0L512 464 252.8 204.8c-12.8-12.8-35.2-12.8-48 0s-12.8 35.2 0 48l259.2 259.2-259.2 259.2c-12.8 12.8-12.8 35.2 0 48s35.2 12.8 48 0l259.2-259.2 259.2 259.2c12.8 12.8 35.2 12.8 48 0s12.8-35.2 0-48L560 512z" p-id="2183"></path></svg>
+                    </div>
+            </div>
+            <div class="card-body">
+              <div class="row" >
+                <div class="" style="width: 95%;  margin:30px auto">
+                  <div class="list-group" id="list-tab" role="tablist">
+                    <span class="list-group-item list-group-item-action" v-for="item in albums" v-bind:data-id="item.id" onclick="select(this)"   role="tab" >{{item.name}}</span>
+                  </div>
+                </div>
+                </div>
+            </div>
+          </div>
+          <!-- 新建相册 -->
+          <div class="card text-white  mb-3 model" id="addAlbumModel" style="position:fixed;left:50%; top:50%;transform:translate(-50%,-50%);  min-height: 260px;min-width: 400px;  max-height: 270px; max-width: 450px;
+         ">
+            <div class="card-header" style="display: flex; flex-direction:row; justify-content: space-between; background-color: #fff!important;">
+                    <div class="text-dark" >新建相册</div>
+                    <div  style="width:25px;height:25px;cursor: pointer;" onclick="hideAddAlbumModel()"  >
+                        <svg t="1582029665381" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2182" width="25" height="25"><path d="M560 512l259.2-259.2c12.8-12.8 12.8-35.2 0-48s-35.2-12.8-48 0L512 464 252.8 204.8c-12.8-12.8-35.2-12.8-48 0s-12.8 35.2 0 48l259.2 259.2-259.2 259.2c-12.8 12.8-12.8 35.2 0 48s35.2 12.8 48 0l259.2-259.2 259.2 259.2c12.8 12.8 35.2 12.8 48 0s12.8-35.2 0-48L560 512z" p-id="2183"></path></svg>
+                    </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group" style="text-align: center;">
+                    <div class="" style="margin-top: 30px;" >
+                        <input type="text" class="form-control" name="name" placeholder="输入相册名称" id="albumName">
+                    </div>
+                    <div class="" style="margin-top: 30px;" >
+                      <input type="button" class="btn btn-primary form-control" onclick="addAlbum()" value="确定">
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+          <!-- 右上角提示框 -->
+        <!-- <div class="albums " style="background-color: #fff; 
+        border-radius: 10px;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);">
+            
+            
+        </div> -->
+            <div style="position: fixed; top: 76px;right: 10px;  display: flex; flex-direction:column;">
+            <div class="toast fade hide" id="toastUpload" role="alert" data-delay="5000" style="width: 300px;"  aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <strong class="mr-auto"> <span style="background-color: rgb(146, 255, 131);border-radius: 50%;">&emsp;</span> 上传完毕</strong>
+                  <small class="text-muted">刚刚</small>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="toast-body" >
+                    总共<span style="background-color: rgb(170, 170, 170);color: white; border-radius: 5px;">&nbsp;{{total}}&nbsp;</span>张,
+                    成功<span style="background-color: rgb(146, 255, 131);color: white;border-radius: 5px;">&nbsp;{{successful}}&nbsp;</span>张,
+                    失败<span style="background-color: rgb(245, 97, 60);color: white;border-radius: 5px;">&nbsp;{{aborted}}&nbsp;</span>张.
+                </div>
+            </div>
+            <div class="toast fade hide" id="toastDelete" role="alert" data-delay="5000" style="width: 300px;" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <strong class="mr-auto" > 删除{{successful?"成功":"失败"}}</strong>
+                  <small class="text-muted">刚刚</small>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="toast-body" >
+                    删除{{successful?"成功":"失败"}}
+                </div>
+            </div>
+        </div>
+        <!-- 右下角进度条 -->
+        <div class="toast fade hide" id="toastProgress" style="position: fixed; right: 5px;bottom: 5px;width: 300px;" role="alert"   aria-live="assertive" aria-atomic="false">
+            <div class="toast-header">
+              <strong class="mr-auto" > 正在上传</strong>
+              <small class="text-muted" id="progress-text"><span id="fileindex">0</span>/ <span id="totalfiles" >0</span> </small>
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body" >
+                <div class="progress">
+                    <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+</div>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/layui.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>
