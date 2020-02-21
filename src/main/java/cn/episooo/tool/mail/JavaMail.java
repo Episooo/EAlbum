@@ -32,8 +32,6 @@ public class JavaMail {
     }
     @Value("${mail.password}")
     public void setHostPassword(String hostPassword) {
-        System.out.println("-----------------");
-        System.out.println(hostPassword);
         JavaMail.hostPassword = hostPassword;
     }
     @Value("${mail.organization}")
