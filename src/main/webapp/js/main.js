@@ -24,8 +24,6 @@ function logOut(){
 // 上传组件
 function select(e){
     $('#selected').val(e.dataset.id);
-    // console.log(e.dataset.id)
-    // console.log($('#selected').val())
     $('#inputGroupFile').click();
     $('#selectModel').hide();
 }
@@ -36,7 +34,6 @@ function hideSelect(){
 function deletePhoto(e) {
     var r = confirm("是否确认删除？");
     if (r) {
-        // console.log("delete：", e.dataset.id)
         var id = e.dataset.id;
         var pgindex = e.dataset.pgindex;
         var imgindex = e.dataset.imgindex;
@@ -67,7 +64,6 @@ function deletePhoto(e) {
 function deleteAlbum(e) {
     var r = confirm("是否确认删除？");
     if (r) {
-        // console.log("delete：", e.dataset.id)
         var id = e.dataset.id;
         var albumindex = e.dataset.albumindex;
 
@@ -92,19 +88,26 @@ function deleteAlbum(e) {
     }
 
 }
-function changeMain(){
-    var contents = document.querySelectorAll('.content');
-    var hash = window.location.hash;
+function hideAllContent(){
+    var contents = document.querySelectorAll('.content-container');
     for(var i=0;i<contents.length;i++){
         $(contents[i]).hide();
     }
-    // console.log("hash",window.location.hash)
-   if(window.location.hash!=''){
-    $(window.location.hash).show();
-   }else{
-    //    默认显示页面
-       $('#photosGroup').show();
-   }
+}
+function changeMain(){
+    var hash = window.location.hash;
+    var arr =  hash.split('/');
+    var group = arr[0];
+    var data = arr[1];
+    
+    if(group=='#photosGroupWithAid' && data!=undefined && data!=''){
+        getPhotosByAid(data);
+    }
+
+    if(group!='' && group!='#'){
+        hideAllContent();
+        $(group).show();
+    }
 }
 function addhashListener(){
     if( ('onhashchange' in window) && ((typeof document.documentMode==='undefined') || document.documentMode==8)) {
@@ -133,6 +136,26 @@ function getPhotos(){
             vphoto.photosData = res;
         }
     })
+}
+function getPhotosByAid(aid){
+    $.ajax({
+        url: "photo/getPhotosByAid",
+        type: "POST",
+        dataType: "json",
+        data: {
+            aid:aid
+        },
+        success: function (res) {
+            for(var i=0;i<vAlbumListTab.albums.length;i++){
+                if(vAlbumListTab.albums[i].id==aid){
+                    vphotoWithAid.albumName = vAlbumListTab.albums[i].name;
+                    break;
+                }
+            }
+            vphotoWithAid.photosData = res;
+        }
+    })
+    
 }
 function getAlbums(){
     $.ajax({
@@ -186,16 +209,28 @@ function addInputFileListener(){
 isLogin();
 addInputFileListener();
 addhashListener();
-changeMain();
 hideSelect();
 hideAddAlbumModel();
 getPhotos();
 getAlbums();
+if(window.location.hash=='' || window.location.hash=='#'){
+    hideAllContent();
+    $('#photosGroup').show();
+}else{
+    changeMain();
+}
 
 //vue相关
 var vphoto = new Vue({
     el: "#photosGroup",
     data: {
+        photosData: []
+    }
+});
+var vphotoWithAid = new Vue({
+    el: "#photosGroupWithAid",
+    data: {
+        albumName:'',
         photosData: []
     }
 });
@@ -227,11 +262,7 @@ var vAlbumListTab = new Vue({
 var valbum = new Vue({
     el:"#albumsGroup",
     data:{
-        albums:[
-        //     { id:1,name:"默认相册1",size:23,previewPhotoPath:"https://dss2.bdstatic.com/6Ot1bjeh1BF3odCf/it/u=2609405129,927497876&fm=74&app=80&f=JPEG&size=f121,90?sec=1880279984&t=bfa4734a31abde3ad80e216835386096"},
-        //     { id:2,name:"默认相册2",size:23,previewPhotoPath:"https://dss2.bdstatic.com/6Ot1bjeh1BF3odCf/it/u=3225612437,610756914&fm=74&app=80&f=JPEG&size=f121,121?sec=1880279984&t=ace7049a5d54601ef0652a84037bf53d"},
-        //     { id:3,name:"默认相册3",size:23,previewPhotoPath:"https://dss2.bdstatic.com/6Ot1bjeh1BF3odCf/it/u=1435177931,3550932454&fm=74&app=80&f=PNG&size=f121,121?sec=1880279984&t=951d17d26356c05751a439b31c267d8b"}
-        ]
+        albums:[]
     }
 })
 
@@ -241,7 +272,7 @@ layui.use(['upload','layer'], function () {
     var layer = layui.layer;
 
     layer.photos({
-        photos: '#photosGroup'
+        photos: '.layer-photos'
         ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
       }); 
     //执行实例
@@ -269,22 +300,20 @@ layui.use(['upload','layer'], function () {
             
           }
         , allDone: function (obj) { //当文件全部被提交后，才触发
-            vtoastUpload.total = obj.total
-            vtoastUpload.successful = obj.successful
-            vtoastUpload.aborted = obj.aborted
-            //   console.log(obj.total); //得到总文件数
-            //   console.log(obj.successful); //请求成功的文件数
-            //   console.log(obj.aborted); //请求失败的文件数
+            vtoastUpload.total = obj.total;//得到总文件数
+            vtoastUpload.successful = obj.successful;//请求成功的文件数
+            vtoastUpload.aborted = obj.aborted;//请求失败的文件数
+
+            //重新加载相片信息和相册信息
             getPhotos();
             getAlbums();
             $('#toastUpload').toast('show');
             $('#fileindex').html(0);
             $('#totalfiles').html(0);
-            // $('#toastProgress').toast('hide');
+
         }
         , done: function (res, index, upload) { //每个文件提交一次触发一次。详见“请求成功的回调”
             $('#fileindex').html(Number($('#fileindex').html())+1);
-            // $('#progress-text').html('正在上传第'+index+"张")
         }
         , error: function () {
             //请求异常回调

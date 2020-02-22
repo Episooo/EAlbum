@@ -68,7 +68,9 @@ public class PhotoController {
 
     @RequestMapping("/getPhotosByAid")
     @ResponseBody
-    public List<PhotoVO> getPhotosByAid(@RequestParam int id,@RequestParam int aid){
-        return photoService.getPhoto(id,aid);
+    public List<PhotoVO> getPhotosByAid(@RequestParam int aid,HttpSession session){
+        User user = (User) session.getAttribute("user");
+
+        return photoService.getPhoto(user.getId(),aid);
     }
 }

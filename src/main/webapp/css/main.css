@@ -1,3 +1,10 @@
+a{
+    text-decoration: none;
+    color: inherit;
+}
+a:hover{
+    text-decoration: none;
+}
 .custom-file-label::after {
     background-color: rgb(52, 58, 64)!important;
     color: rgb(108, 117, 125)!important;
@@ -29,9 +36,8 @@ nav{
    user-select:none;
 }
 .main{
-    padding: 10px;
     position: absolute;
-    left: 72px;
+    left: 70px;
     top: 56px;
     right: 0px;
 
@@ -42,7 +48,22 @@ nav{
     
     /* background-color: rgb(153, 169, 245); */
 }
+.content-container{
+    padding-top:56px;
+    margin-top: -56px;
+    z-index: 10;
+    
+}
+.content-header{
+    width: calc( 100vw - 70px);
+    box-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+    height: 47px;
+    font-size: 25px;
+    line-height: 47px;
+    background-color: white;
+}
 .content{
+    padding: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -185,4 +206,43 @@ nav{
 }
 .image:hover .delete{
     opacity: 1;
+}
+.turnBack{
+    float: left;
+}
+.turnBack a{
+    display: inline-block;
+    width: 33px;
+}
+.turnBack svg{
+    transform: translate(8px,-4px);
+    transition: transform 0.2s linear,bottom 0.2s linear;
+}
+.turnBack:hover svg{
+    transform: translate(5px,-4px);
+}
+#selectModel{
+    position: fixed; 
+    top:66px;
+    left:0;
+    right:0;
+    margin:auto;
+    max-height: 500px;
+    max-width: 400px;
+}
+.model .card-header{
+    display: flex; 
+    flex-direction:row; 
+    justify-content: space-between; 
+    background-color: #fff!important;
+}
+#addAlbumModel{
+    position:fixed;
+    left:50%; 
+    top:50%;
+    transform:translate(-50%,-50%);
+    min-height: 260px;
+    min-width: 400px;
+    max-height: 270px;
+    max-width: 450px;
 }
