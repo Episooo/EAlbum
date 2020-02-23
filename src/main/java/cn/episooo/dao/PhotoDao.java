@@ -25,10 +25,13 @@ public interface PhotoDao {
             "<when test='aid!=-1'> ",
             " and aid=#{aid}",
             "</when>",
-            " and deleted= 0 order by id desc</script>"})
-    public ArrayList<Photo> getPhotos(@Param("uid")int uid,@Param("aid")int aid);
+            " and deleted= #{deleted} order by id desc</script>"})
+    public ArrayList<Photo> getPhotos(@Param("uid")int uid,@Param("aid")int aid,@Param("deleted") int deleted);
 
-    @Update("update photo set deleted = 1 , deletedday=#{da} where id=#{id} AND uid=#{uid}")
-    public int deletePhoto( @Param("uid")int uid,  @Param("id")int id, @Param("da") Date da);
 
+    @Update("update photo set deleted = #{deleted} , deletedday=#{da} where id=#{id} AND uid=#{uid}")
+    public int updatePhoto( @Param("deleted") int deleted,@Param("uid")int uid,  @Param("id")int id, @Param("da") Date da);
+
+    @Update("update album set deleted = 0 where id = #{aid}")
+    public int recoverAlbum(@Param("aid") int aid);
     }

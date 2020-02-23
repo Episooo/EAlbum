@@ -33,7 +33,6 @@ public class PhotoController {
     @ResponseBody
     public boolean deletePhoto(int id,HttpSession session){
         User user = (User) session.getAttribute("user");
-
         return photoService.deletePhoto(user.getId(),id);
     }
 
@@ -62,15 +61,16 @@ public class PhotoController {
      */
     @RequestMapping("/getPhotos")
     @ResponseBody
-    public List<PhotoVO> getPhotos(@RequestParam int id){
-        return photoService.getPhoto(id,-1);
-    }
-
-    @RequestMapping("/getPhotosByAid")
-    @ResponseBody
-    public List<PhotoVO> getPhotosByAid(@RequestParam int aid,HttpSession session){
+    public List<PhotoVO> getPhotos(@RequestParam(defaultValue = "0") int deleted,@RequestParam(defaultValue = "-1") int aid,HttpSession session){
         User user = (User) session.getAttribute("user");
-
-        return photoService.getPhoto(user.getId(),aid);
+        return photoService.getPhoto(user.getId(),aid,deleted);
     }
+
+    @RequestMapping("/recoverPhoto")
+    @ResponseBody
+    public boolean recoverPhoto(@RequestParam int id,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        return photoService.recoverPhoto(user.getId(),id);
+    }
+
 }

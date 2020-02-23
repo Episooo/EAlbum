@@ -12,8 +12,8 @@ import java.util.List;
  */
 public interface PhotoService {
     public boolean savePhoto(String path, String filename, int uid,int aid, MultipartFile upload);
-    public List<PhotoVO> getPhoto(int id, int aid);
+    public List<PhotoVO> getPhoto(int id, int aid,int deleted);
     public boolean deletePhoto(int uid ,int id);
-
+    public boolean recoverPhoto(int uid ,int id);
 
 }

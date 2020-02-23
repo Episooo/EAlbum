@@ -89,8 +89,8 @@ public class PhotoServiceImpl implements PhotoService {
      * @Return : java.util.ArrayList<cn.episooo.vo.PhotoVO>
      */
     @Override
-    public ArrayList<PhotoVO> getPhoto(int uid,int aid) {
-        ArrayList<Photo> photos = photoDao.getPhotos(uid,aid);
+    public ArrayList<PhotoVO> getPhoto(int uid,int aid,int deleted) {
+        ArrayList<Photo> photos = photoDao.getPhotos(uid,aid,deleted);
         if(photos.size()==0){
             return null;
         }
@@ -140,9 +140,28 @@ public class PhotoServiceImpl implements PhotoService {
         Date date = new Date();
         System.out.println(date);
         int res = 0;
-        res = photoDao.deletePhoto(uid,id,date);
+        res = photoDao.updatePhoto(1,uid,id,date);
         return res==1;
     }
+    /*
+     * @Description :
+     * @param ： uid 此处用户uid用于校验 该相册id是否属于用户
+     * @param ： id  相册id
+     * @Return : boolean
+     */
+    @Override
+    public boolean recoverPhoto(int uid ,int id) {
 
+        Photo photo = photoDao.getPhotos(uid,-1,1).get(0);
+        int res = 0;
+        if(photo!=null){
+            res = photoDao.updatePhoto(0,uid,id,null);
+            if(res==1){
+                //如果对应相册没了，就恢复对应相册
+                photoDao.recoverAlbum(photo.getAid());
+            }
+        }
+        return res==1;
+    }
 
 }

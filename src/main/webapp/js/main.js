@@ -130,16 +130,28 @@ function getPhotos(){
         type: "POST",
         dataType: "json",
         data: {
-            id: $.cookie("id")
         },
         success: function (res) {
             vphoto.photosData = res;
         }
     })
 }
+function getDeletedPhotos(){
+    $.ajax({
+        url: "photo/getPhotos",
+        type: "POST",
+        dataType: "json",
+        data: {
+            deleted:1
+        },
+        success: function (res) {
+            vrecycle.photosData = res;
+        }
+    })
+}
 function getPhotosByAid(aid){
     $.ajax({
-        url: "photo/getPhotosByAid",
+        url: "photo/getPhotos",
         type: "POST",
         dataType: "json",
         data: {
@@ -169,6 +181,51 @@ function getAlbums(){
             valbum.albums = res;
         }
     })
+}
+function deletePhotoAbsolutly(e){
+    var r = confirm("是否确认删除？");
+    if (r) {
+        var imgindex = e.dataset.imgindex;
+        $.ajax({
+            url: "photo/deletePhotoAbsolutly",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: e.dataset.id
+            },
+            success: function (res) {
+                vtoastDelete.successful = res;
+                if (res) {
+                    // 在vue中删除第imgindex个元素
+                    vrecycle.photosData.splice(imgindex, 1);
+                }
+                $('#toastDelete').toast('show');
+
+            }
+        })
+    }
+}
+function recoverPhoto(e){
+    var r = confirm("是否确认恢复？");
+    if (r) {
+        var imgindex = e.dataset.imgindex;
+        $.ajax({
+            url: "photo/recoverPhoto",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: e.dataset.id
+            },
+            success: function (res) {
+                vtoastRecovery.successful = res;
+                if (res) {
+                    // 在vue中删除第imgindex个元素
+                    vrecycle.photosData.splice(imgindex, 1);
+                }
+                $('#toastRecovery').toast('show');
+            }
+        })
+    }
 }
 function hideAddAlbumModel(){
     $('#albumName').val('');
@@ -213,6 +270,7 @@ hideSelect();
 hideAddAlbumModel();
 getPhotos();
 getAlbums();
+getDeletedPhotos();
 if(window.location.hash=='' || window.location.hash=='#'){
     hideAllContent();
     $('#photosGroup').show();
@@ -237,7 +295,7 @@ var vphotoWithAid = new Vue({
 var vtoastDelete = new Vue({
     el: "#toastDelete",
     data: {
-        successful: 1
+        successful: false
     }
 })
 var vtoastUpload = new Vue({
@@ -246,6 +304,12 @@ var vtoastUpload = new Vue({
         total: 0,
         successful: 0,
         aborted: 0
+    }
+})
+var vtoastRecovery = new Vue({
+    el: "#toastRecovery",
+    data: {
+        successful: false
     }
 })
 var vAlbumListTab = new Vue({
@@ -265,7 +329,12 @@ var valbum = new Vue({
         albums:[]
     }
 })
-
+var vrecycle = new Vue({
+    el:"#recycleGroup",
+    data:{
+        photosData:[]
+    }
+})
 
 layui.use(['upload','layer'], function () {
     var upload = layui.upload;
