@@ -115,10 +115,7 @@ nav{
     transform: scale(1.1);
     
 }
-.img:hover .delete{
-    opacity: 1;
-}
-.img:hover .download,.recovery{
+.img:hover .download,.img:hover .recovery,.img:hover .delete{
     opacity: 1;
 }
 .title{
