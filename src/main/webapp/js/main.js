@@ -34,7 +34,6 @@ function hideSelect(){
 function deletePhoto(e) {
     var r = confirm("是否确认删除？");
     if (r) {
-        var id = e.dataset.id;
         var pgindex = e.dataset.pgindex;
         var imgindex = e.dataset.imgindex;
         $.ajax({
@@ -60,6 +59,63 @@ function deletePhoto(e) {
         })
     }
 
+}
+function deletePhotoInAlbum(e) {
+    var r = confirm("是否确认删除？");
+    if (r) {
+        var pgindex = e.dataset.pgindex;
+        var imgindex = e.dataset.imgindex;
+        $.ajax({
+            url: "photo/deletePhoto",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: e.dataset.id
+            },
+            success: function (res) {
+                vtoastDelete.successful = res;
+                if (res) {
+                    // 在vue中删除第imgindex个元素
+                    vphotoWithAid.photosData[pgindex].photos.splice(imgindex, 1);
+                    // 如果所删照片的组没有其他照片，则删除该组
+                    if (vphotoWithAid.photosData[pgindex].photos.length == 0) {
+                        vphotoWithAid.photosData.splice(pgindex, 1);
+                    }
+                }
+                $('#toastDelete').toast('show');
+
+            }
+        })
+    }
+
+}
+function deletePhotoAbsolutly(e){
+    var r = confirm("是否确认删除？");
+    if (r) {
+        var pgindex = e.dataset.pgindex;
+        var imgindex = e.dataset.imgindex;
+        $.ajax({
+            url: "photo/deletePhotoAbsolutly",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: e.dataset.id
+            },
+            success: function (res) {
+                vtoastDelete.successful = res;
+                if (res) {
+                    // 在vue中删除第imgindex个元素
+                    vrecycle.photosData[pgindex].photos.splice(imgindex, 1);
+                    // 如果所删照片的组没有其他照片，则删除该组
+                    if (vrecycle.photosData[pgindex].photos.length == 0) {
+                        vrecycle.photosData.splice(pgindex, 1);
+                    }
+                }
+                $('#toastDelete').toast('show');
+
+            }
+        })
+    }
 }
 function deleteAlbum(e) {
     var r = confirm("是否确认删除？");
@@ -106,7 +162,16 @@ function changeMain(){
 
     if(group!='' && group!='#'){
         hideAllContent();
+        refreshContent(group);
         $(group).show();
+    }
+}
+function refreshContent(group){
+    switch(group){
+        case '#photosGroup' :getPhotos();break;
+        case '#albumsGroup' :getAlbums();break;
+        case '#recycleGroup' :getDeletedPhotos();break;
+        default :break;
     }
 }
 function addhashListener(){
@@ -182,32 +247,10 @@ function getAlbums(){
         }
     })
 }
-function deletePhotoAbsolutly(e){
-    var r = confirm("是否确认删除？");
-    if (r) {
-        var imgindex = e.dataset.imgindex;
-        $.ajax({
-            url: "photo/deletePhotoAbsolutly",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: e.dataset.id
-            },
-            success: function (res) {
-                vtoastDelete.successful = res;
-                if (res) {
-                    // 在vue中删除第imgindex个元素
-                    vrecycle.photosData.splice(imgindex, 1);
-                }
-                $('#toastDelete').toast('show');
-
-            }
-        })
-    }
-}
 function recoverPhoto(e){
     var r = confirm("是否确认恢复？");
     if (r) {
+        var pgindex = e.dataset.pgindex;
         var imgindex = e.dataset.imgindex;
         $.ajax({
             url: "photo/recoverPhoto",
@@ -220,7 +263,11 @@ function recoverPhoto(e){
                 vtoastRecovery.successful = res;
                 if (res) {
                     // 在vue中删除第imgindex个元素
-                    vrecycle.photosData.splice(imgindex, 1);
+                    vrecycle.photosData[pgindex].photos.splice(imgindex, 1);
+                    // 如果所删照片的组没有其他照片，则删除该组
+                    if (vrecycle.photosData[pgindex].photos.length == 0) {
+                        vrecycle.photosData.splice(pgindex, 1);
+                    }
                 }
                 $('#toastRecovery').toast('show');
             }

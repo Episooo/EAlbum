@@ -220,7 +220,7 @@
                                 <div class="img" v-for="(photo,imgindex) in pGroup.photos" v-bind:id="photo.id"
                                     v-bind:data-id="photo.id">
                                     <div class="delete" v-bind:data-id="photo.id" v-bind:data-imgindex="imgindex"
-                                        v-bind:data-pgindex="pgindex" onclick="deletePhoto(this)">
+                                        v-bind:data-pgindex="pgindex" onclick="deletePhotoInAlbum(this)">
                                         <svg t="1581844816312" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                             xmlns="http://www.w3.org/2000/svg" p-id="23515" width="35" height="35">
                                             <path

@@ -150,6 +150,7 @@ public class PhotoServiceImpl implements PhotoService {
      * @Return : boolean
      */
     @Override
+    @Transactional
     public boolean recoverPhoto(int uid ,int id) {
 
         Photo photo = photoDao.getPhotos(uid,-1,1).get(0);
