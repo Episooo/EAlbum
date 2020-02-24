@@ -1,10 +1,7 @@
 package cn.episooo.dao;
 
 import cn.episooo.po.Photo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -25,8 +22,11 @@ public interface PhotoDao {
             "<when test='aid!=-1'> ",
             " and aid=#{aid}",
             "</when>",
+            "<when test='id!=-1'> ",
+            " and id=#{id}",
+            "</when>",
             " and deleted= #{deleted} order by id desc</script>"})
-    public ArrayList<Photo> getPhotos(@Param("uid")int uid,@Param("aid")int aid,@Param("deleted") int deleted);
+    public ArrayList<Photo> getPhotos(@Param("uid")int uid,@Param("id") int id,@Param("aid")int aid,@Param("deleted") int deleted);
 
 
     @Update("update photo set deleted = #{deleted} , deletedday=#{da} where id=#{id} AND uid=#{uid}")
@@ -34,4 +34,7 @@ public interface PhotoDao {
 
     @Update("update album set deleted = 0 where id = #{aid}")
     public int recoverAlbum(@Param("aid") int aid);
-    }
+
+    @Delete("delete from photo where uid=#{uid} and id=#{id} and deleted= 1")
+    public int deletePhoto(@Param("uid") int uid, @Param("id") int id);
+}

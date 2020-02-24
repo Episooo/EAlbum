@@ -73,4 +73,12 @@ public class PhotoController {
         return photoService.recoverPhoto(user.getId(),id);
     }
 
+
+    @RequestMapping("/deletePhotoAbsolutly")
+    @ResponseBody
+    public boolean deletePhotoAbsolutly(@RequestParam int id, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        return photoService.deletePhotoAbsolutly(user.getId(),id,session.getServletContext().getRealPath("/"));
+    }
+
 }

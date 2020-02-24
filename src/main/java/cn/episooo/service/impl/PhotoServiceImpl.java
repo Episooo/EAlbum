@@ -5,6 +5,7 @@ import cn.episooo.po.Photo;
 import cn.episooo.service.PhotoService;
 import cn.episooo.tool.image.ImageUtils;
 import cn.episooo.vo.PhotoVO;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Autowired
     PhotoDao photoDao;
 
-
+    static Logger logger = Logger.getLogger ( PhotoServiceImpl.class.getName () ) ;
 
     /*
      * @Description : 这里将预览图存在projectPath/photos/{uid}/pre/
@@ -90,7 +91,7 @@ public class PhotoServiceImpl implements PhotoService {
      */
     @Override
     public ArrayList<PhotoVO> getPhoto(int uid,int aid,int deleted) {
-        ArrayList<Photo> photos = photoDao.getPhotos(uid,aid,deleted);
+        ArrayList<Photo> photos = photoDao.getPhotos(uid,-1,aid,deleted);
         if(photos.size()==0){
             return null;
         }
@@ -153,7 +154,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Transactional
     public boolean recoverPhoto(int uid ,int id) {
 
-        Photo photo = photoDao.getPhotos(uid,-1,1).get(0);
+        Photo photo = photoDao.getPhotos(uid,id,-1,1).get(0);
         int res = 0;
         if(photo!=null){
             res = photoDao.updatePhoto(0,uid,id,null);
@@ -163,6 +164,33 @@ public class PhotoServiceImpl implements PhotoService {
             }
         }
         return res==1;
+    }
+    @Override
+    @Transactional
+    public boolean deletePhotoAbsolutly(int uid, int id, String path){
+
+        Photo photo = photoDao.getPhotos(uid, id, -1, 1).get(0);
+
+        if(photoDao.deletePhoto(uid,id)==1){
+            File file = new File(path+photo.getPath());
+            if(file.exists()){
+               if(!file.delete()){
+                   throw new RuntimeException("删除id为"+id+"的原图失败");
+               }
+            }else {
+                logger.error("文件："+file.getAbsolutePath()+"不存在");
+            }
+            file = new File(path+photo.getPrepath());
+            if(file.exists()){
+                if(!file.delete()){
+                    throw new RuntimeException("删除id为"+id+"的预览图失败");
+                }
+            }else {
+                logger.error("文件："+file.getAbsolutePath()+"不存在");
+            }
+            return true;
+        }
+        return false;
     }
 
 }
