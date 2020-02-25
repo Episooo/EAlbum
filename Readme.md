@@ -1,7 +1,7 @@
 # EAlbum
 一个简易的云相册，主要用来应付学校实训（真实）+熟悉ssm+前端康复训练（x），所以可以看到我用了很多框架来完成...<br>
 前端设计主要是模仿小米云相册的。
-
+[示例链接](https://eablum.episooo.cn "EAlbum")
 ## 技术栈
 #### 前端框架
  - Bootstrap
@@ -27,9 +27,8 @@
    - 查看相册
  - 回收站
    - 恢复照片
-#### 待完善：
- - 回收站
    - 彻底删除照片
+#### 待完善：
  - 多选图片进行下载/删除
 #### 待优化：
  - 懒加载和分页
@@ -42,3 +41,4 @@ mail.host=yourEmailHost #目前仅支持QQ邮箱或绑定在QQ邮箱的域名邮
 mail.password=yourEmailPassword  #在邮箱服务上开启SMTP时授予的密码
 mail.organization=yourOrganizationName  #这决定了发邮件时使用的公司名 可任意填写
 ```
+ - 数据库文件位于webapp下。
