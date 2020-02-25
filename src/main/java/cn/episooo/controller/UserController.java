@@ -4,6 +4,7 @@ import cn.episooo.po.User;
 import cn.episooo.service.UserService;
 import cn.episooo.tool.image.VerifyCode;
 import cn.episooo.tool.mail.JavaMail;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +34,7 @@ public class UserController {
     @Autowired
     private JavaMail mail;
 
+    static Logger logger = Logger.getLogger ( UserController.class.getName () ) ;
     private Random random = new Random();
 
     @RequestMapping("/signin")
@@ -71,7 +73,8 @@ public class UserController {
         //-1:验证码不正确  -2:邮箱已存在 -3:邮箱不存在 1：注册成功，等待激活
         int result = -1;
         user.setEmail(user.getEmail().toLowerCase());
-        if (session.getAttribute("verifycode").equals(verifycode.toLowerCase())) {
+
+        if (session.getAttribute("verifycode")!=null&&session.getAttribute("verifycode").equals(verifycode.toLowerCase())) {
             if (userService.getUser(user) == null) {
                 result = 1;//1：注册成功,等待激活
 
@@ -82,7 +85,7 @@ public class UserController {
                     mail.sendMail(user.getEmail(), "EAlbum激活码",
                             mail.getVerifyTemplate(user.getUsername(), "EAlbum", (String) session.getAttribute("emailcode")));
                 }catch (Exception e){
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                     result = -3;
                 }
                             } else {

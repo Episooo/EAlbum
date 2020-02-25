@@ -9,7 +9,8 @@ CREATE TABLE user (
     username varchar(32) NOT NULL,
     password varchar(32) NOT NULL,
     email varchar(255) NOT NULL,
-    active tinyint(1) NOT NULL
+    active tinyint(1) NOT NULL,
+    INDEX user_id_index (id)
 );
 
 DROP TABLE IF EXISTS photo;
@@ -21,7 +22,8 @@ CREATE TABLE photo (
   prepath varchar(255)  NOT NULL,
   path varchar(255)  NOT NULL,
   deleted tinyint(1) NOT NULL  DEFAULT 0 ,
-  deletedday datetime DEFAULT NULL
+  deletedday datetime DEFAULT NULL,
+  INDEX photo_id_index (id)
 );
 
 DROP TABLE IF EXISTS album;
@@ -31,7 +33,8 @@ CREATE TABLE album (
   name varchar(255) NOT NULL,
   size int(11) NOT NULL,
   deleted tinyint(1) NOT NULL DEFAULT 0,
-  previewPhotoPath VARCHAR(255)
+  previewPhotoPath VARCHAR(255),
+  INDEX album_id_index (id)
 );
 
 -- 新建用户时创建默认相册
