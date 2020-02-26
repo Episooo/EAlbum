@@ -73,7 +73,6 @@ public class UserController {
         //-1:验证码不正确  -2:邮箱已存在 -3:邮箱不存在 1：注册成功，等待激活
         int result = -1;
         user.setEmail(user.getEmail().toLowerCase());
-
         if (session.getAttribute("verifycode")!=null&&session.getAttribute("verifycode").equals(verifycode.toLowerCase())) {
             if (userService.getUser(user) == null) {
                 result = 1;//1：注册成功,等待激活
