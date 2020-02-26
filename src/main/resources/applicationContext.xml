@@ -31,6 +31,9 @@
         <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
         <property name="user" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
+        <!--    定期检查链接是否过时    -->
+        <property name="idleConnectionTestPeriod" value="3600"/>
+        <property name="testConnectionOnCheckin" value="true"/>
     </bean>
 
 
