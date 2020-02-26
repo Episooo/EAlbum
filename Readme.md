@@ -1,7 +1,7 @@
 # EAlbum
 一个简易的云相册，主要用来应付学校实训（真实）+熟悉ssm+前端康复训练（x），所以可以看到我用了很多框架来完成...<br>
 前端设计主要是模仿小米云相册的。
-[示例链接](https://eablum.episooo.cn "EAlbum")
+[示例链接](https://ealbum.episooo.cn "EAlbum")
 ## 技术栈
 #### 前端框架
  - Bootstrap
