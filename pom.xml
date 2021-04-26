@@ -77,7 +77,7 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.6</version>
+      <version>2.7</version>
     </dependency>
     <!--  跨服务器文件上传  -->
     <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core -->
